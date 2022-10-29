@@ -5,7 +5,7 @@
     const { ArgumentParser } = require("argparse")
     const { runJobs } = require("parallel-park")
     const request = require("request-async")
-    const Whoiser = require("whoiser")
+    const whoiser = require("whoiser")
     const shelljs = require("shelljs")
     const fs = require("fs")
     
@@ -28,7 +28,7 @@
                         const email = maintainer.email
 
                         try{
-                            var domainExists = await Whoiser(email.replace(/.*@/, ""))
+                            var domainExists = await whoiser(email.replace(/.*@/, ""))
                             domainExists = JSON.stringify(domainExists)
 
                             if(domainExists.indexOf("DOMAIN NOT FOUND") !== -1){
@@ -66,10 +66,10 @@
                 const email = maintainer.email
     
                 try{
-                    var domainExists = await Whoiser(email.replace(/.*@/, ""))
+                    var domainExists = await whoiser(email.replace(/.*@/, ""))
                     domainExists = JSON.stringify(domainExists)
     
-                    if(domainExists.indexOf("DOMAIN NOT FOUND") !== -1){
+                    if(domainExists.match("DOMAIN NOT FOUND")){
                         console.log(`${args.package} can be hijacked. Name: ${maintainer.name} | Email: ${email}`)
                         hijacked = true
                     }
